@@ -25,3 +25,13 @@ const testArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const tree = Tree(testArr);
 
 prettyPrint(tree.getRoot());
+tree.insert(18);
+prettyPrint(tree.getRoot());
+tree.insert(5000);
+prettyPrint(tree.getRoot());
+tree.insert(7000);
+prettyPrint(tree.getRoot());
+tree.insert(4);
+prettyPrint(tree.getRoot());
+tree.del(777);
+prettyPrint(tree.getRoot());
