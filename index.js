@@ -30,6 +30,8 @@ prettyPrint(tree.getRoot());
 tree.insert(5000);
 prettyPrint(tree.getRoot());
 tree.insert(7000);
+tree.insert(10000);
+tree.insert(17);
 prettyPrint(tree.getRoot());
 tree.insert(4);
 prettyPrint(tree.getRoot());
@@ -47,3 +49,10 @@ const postorderArr = tree.printPostOrder();
 console.log(inorderArr)
 console.log(preorderArr)
 console.log(postorderArr)
+
+console.log(tree.height())
+console.log(tree.depth(10000))
+console.log(tree.isBalanced())
+tree.rebalance()
+console.log(tree.isBalanced())
+prettyPrint(tree.getRoot());

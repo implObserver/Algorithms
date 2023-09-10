@@ -2,7 +2,7 @@ import { mergeSort } from "../mergeSort/mergeSort.js"
 import { Node } from "./node.js";
 
 export const Tree = (arr) => {
-    const root = buildTree(arr);
+    let root = buildTree(arr);
     const getRoot = () => {
         return root;
     }
@@ -91,7 +91,7 @@ export const Tree = (arr) => {
         }
     }
 
-    const levelOrder = (func = null, node = root) => {
+    const levelOrder = (func = null) => {
         let que = [];
         const arr = [];
         que.push(root);
@@ -161,7 +161,42 @@ export const Tree = (arr) => {
         return arr;
     }
 
-    return { getRoot, insert, del, find, levelOrder, printInorder, printPreorder, printPostOrder };
+    const height = (node = root) => {
+        const left = node.getLeft();
+        const right = node.getRight();
+        return 1 + Math.max(
+            left !== null ? height(left) : -1,
+            right !== null ? height(right) : -1
+        );
+    }
+
+    const depth = (val, node = root, d = 0) => {
+        const left = node.getLeft();
+        const right = node.getRight();
+        const value = node.getValue();
+        if (val > value) {
+            return depth(val, right, ++d);
+        } else if (val < value) {
+            return depth(val, left, ++d);
+        } else if (val === value) {
+            return d;
+        }
+    }
+
+    const isBalanced = (node = root) => {
+        const left = node.getLeft();
+        const right = node.getRight();
+        const lHeight = height(left);
+        const rHeigth = height(right);
+        return Math.abs(lHeight - rHeigth) <= 1;
+    }
+
+    const rebalance = () => {
+        const nodes = levelOrder();
+        root = buildTree(nodes);
+    }
+
+    return { getRoot, insert, del, find, levelOrder, printInorder, printPreorder, printPostOrder, height, depth, isBalanced, rebalance };
 }
 
 const buildTree = (arr) => {
