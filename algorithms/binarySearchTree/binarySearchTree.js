@@ -38,12 +38,12 @@ export const Tree = (arr) => {
         const left = node.getLeft();
         const right = node.getRight();
         const value = node.getValue();
-        const count = node.getCount();
         if (val > value) {
             del(val, right, 'right');
         } else if (val < value) {
             del(val, left, 'left');
         } else if (val === value) {
+            const count = node.getCount();
             if (count > 1) {
                 node.decDuplicate();
             } else {
@@ -78,7 +78,90 @@ export const Tree = (arr) => {
         return deepLeft(left);
     }
 
-    return { getRoot, insert, del };
+    const find = (val, node = root) => {
+        const left = node.getLeft();
+        const right = node.getRight();
+        const value = node.getValue();
+        if (val > value) {
+            return find(val, right);
+        } else if (val < value) {
+            return find(val, left);
+        } else if (val === value) {
+            return node;
+        }
+    }
+
+    const levelOrder = (func = null, node = root) => {
+        let que = [];
+        const arr = [];
+        que.push(root);
+        while (que.length) {
+            let node = que.shift();
+            const left = node.getLeft();
+            const right = node.getRight();
+            arr.push(node.getValue());
+            if (func !== null) {
+                func(node);
+            }
+            if (left !== null) {
+                que.push(left);
+            }
+            if (right !== null) {
+                que.push(right);
+            }
+        }
+        return arr;
+    }
+
+    const printInorder = (node = root, arr = [], func = null,) => {
+        if (node === null) {
+            return arr;
+        }
+        const left = node.getLeft();
+        const right = node.getRight();
+        const value = node.getValue();
+        printInorder(left, arr, func);
+        arr.push(value);
+        if (func !== null) {
+            func(node);
+        }
+        printInorder(right, arr), func;
+        return arr;
+    }
+
+    const printPreorder = (node = root, arr = [], func = null,) => {
+        if (node === null) {
+            return arr;
+        }
+        const left = node.getLeft();
+        const right = node.getRight();
+        const value = node.getValue();
+        arr.push(value);
+        if (func !== null) {
+            func(node);
+        }
+        printPreorder(left, arr, func);
+        printPreorder(right, arr, func);
+        return arr;
+    }
+
+    const printPostOrder = (node = root, arr = [], func = null,) => {
+        if (node === null) {
+            return arr;
+        }
+        const left = node.getLeft();
+        const right = node.getRight();
+        const value = node.getValue();
+        printPostOrder(left, arr, func);
+        printPostOrder(right, arr, func);
+        arr.push(value);
+        if (func !== null) {
+            func(node);
+        }
+        return arr;
+    }
+
+    return { getRoot, insert, del, find, levelOrder, printInorder, printPreorder, printPostOrder };
 }
 
 const buildTree = (arr) => {
